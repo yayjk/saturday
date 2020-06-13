@@ -20,6 +20,7 @@ import UploadImage from "./components/auth/UploadImage";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { UploadJPG } from "./components/views/UploadJPG";
+import { Search } from "./components/views/Search";
 
 library.add(faEdit);
 
@@ -33,11 +34,9 @@ class App extends Component {
             <Navbar />
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route exact path="/products" component={Products} />
               <Route exact path="/admin" component={ProductAdmin} />
               <Route exact path="/login" component={LogIn} />
-              <Route exact path="/upload" component={Upload} />
-              <Route exact path="/UploadImage.html" component={Upload} />
+              <Route exact path="/upload" component={UploadJPG} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/forgotpassword" component={ForgotPassword} />
               <Route
@@ -54,7 +53,7 @@ class App extends Component {
               <Route exact path="/welcome" component={Welcome} />
               <Route exact path="/UploadImage" component={UploadImage} />
               <Route path="/about" component={About} />
-              <Route path="/upload-image-jpg" component={UploadJPG} />
+              <Route path="/search" component={Search} />
             </Switch>
             {/* <Footer /> */}
           </div>

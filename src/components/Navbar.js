@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 
 export default class Navbar extends Component {
   render() {
@@ -6,7 +6,12 @@ export default class Navbar extends Component {
       <nav className="navbar" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
           <a className="navbar-item" href="/">
-            <img src="hexal-logo.png" width="112" height="28" alt="hexal logo" />
+            <img
+              src="hexal-logo.png"
+              width="112"
+              height="28"
+              alt="hexal logo"
+            />
           </a>
         </div>
 
@@ -15,10 +20,10 @@ export default class Navbar extends Component {
             <a href="/Upload" className="navbar-item">
               Upload
             </a>
-            <a href="/products" className="navbar-item">
+            <a href="/search" className="navbar-item">
               Query
             </a>
-            <a href="/admin" className="navbar-item">
+            <a href="/login" className="navbar-item">
               Sign Out
             </a>
           </div>
@@ -37,6 +42,6 @@ export default class Navbar extends Component {
           </div>
         </div>
       </nav>
-    )
+    );
   }
 }
