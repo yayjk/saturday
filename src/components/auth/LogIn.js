@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import FormErrors from "../FormErrors";
 import Validate from "../utility/FormValidation";
 import { Auth } from "aws-amplify";
+import { Layout } from "../../layout/layout";
 
 class LogIn extends Component {
   state = {
@@ -9,20 +10,20 @@ class LogIn extends Component {
     password: "",
     errors: {
       cognito: null,
-      blankfield: false
-    }
+      blankfield: false,
+    },
   };
 
   clearErrorState = () => {
     this.setState({
       errors: {
         cognito: null,
-        blankfield: false
-      }
+        blankfield: false,
+      },
     });
   };
 
-  handleSubmit = async event => {
+  handleSubmit = async (event) => {
     event.preventDefault();
 
     // Form validation
@@ -30,47 +31,49 @@ class LogIn extends Component {
     const error = Validate(event, this.state);
     if (error) {
       this.setState({
-        errors: { ...this.state.errors, ...error }
+        errors: { ...this.state.errors, ...error },
       });
     }
 
     // AWS Cognito integration here
-    try{
-      const user = await Auth.signIn(this.state.username, this.state.password);
-      console.log(user);
-      this.props.history.push("/UploadImage");
-    }catch(error) {
-      let err = null;
-      !error.message ? err = { "message": error } : err = error;
+    try {
+      await Auth.signIn(this.state.username, this.state.password);
+      // const useableResponse = await user.json();
+      // console.log(useableResponse);
+      sessionStorage.setItem("login@saturday", true);
+      window.location.href = "./upload";
+    } catch (error) {
+      // let err = null;
+      // !error.message ? (err = { message: error }) : (err = error);
       this.setState({
         error: {
           ...this.state.errors,
-        cognito: error
-        }
-      })
+          cognito: error,
+        },
+      });
     }
   };
 
-  onInputChange = event => {
+  onInputChange = (event) => {
     this.setState({
-      [event.target.id]: event.target.value
+      [event.target.id]: event.target.value,
     });
     document.getElementById(event.target.id).classList.remove("is-danger");
-  }
-
+  };
 
   render() {
     return (
-      <section className="section auth">
-        <div className="container">
+      <Layout>
+        <section className="section auth">
           <h1>Log in</h1>
           <FormErrors formerrors={this.state.errors} />
 
           <form onSubmit={this.handleSubmit}>
             <div className="field">
               <p className="control">
-                <input  q
-                  className="input" 
+                <input
+                  q
+                  className="input"
                   type="text"
                   id="username"
                   aria-describedby="usernameHelp"
@@ -82,8 +85,8 @@ class LogIn extends Component {
             </div>
             <div className="field">
               <p className="control has-icons-left">
-                <input 
-                  className="input" 
+                <input
+                  className="input"
                   type="password"
                   id="password"
                   placeholder="Password"
@@ -102,14 +105,15 @@ class LogIn extends Component {
             </div>
             <div className="field">
               <p className="control">
-                <button className="button is-success">
-                  Login
-                </button>
+                <button className="button is-success">Login</button>
               </p>
             </div>
+            {this.state.error && (
+              <div className="field">{this.state.error.cognito.message}</div>
+            )}
           </form>
-        </div>
-      </section>
+        </section>
+      </Layout>
     );
   }
 }

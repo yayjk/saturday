@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { cors_bypass } from "../../constants/constants";
+import { cors_bypass } from "../constants/constants";
+import { Layout } from "../layout/layout";
 
 export const Search = (e) => {
   const [tagsArray, changeTagsArray] = useState([]);
@@ -81,57 +82,55 @@ export const Search = (e) => {
   };
 
   return (
-    <>
-      <div className="container">
-        <div className="row">
-          <div className="col-sm-12 my-2">
-            <input
-              className="form-control"
-              type="text"
-              onKeyPress={storeTags.bind(this)}
-              id="search_term"
-              placeholder="Add your tags..."
-            />
-          </div>
+    <Layout>
+      <div className="row">
+        <div className="col-sm-12 my-2">
+          <input
+            className="form-control"
+            type="text"
+            onKeyPress={storeTags.bind(this)}
+            id="search_term"
+            placeholder="Add your tags..."
+          />
+        </div>
 
-          <div className="d-flex col=sm-12 my-2">
-            {tagsArray.map((tag) => (
-              <span key={tag} className="rounded bg-success p-2 mx-2 flex-wrap">
-                {tag}
-              </span>
-            ))}
-          </div>
+        <div className="d-flex col=sm-12 my-2">
+          {tagsArray.map((tag) => (
+            <span key={tag} className="rounded bg-success p-2 mx-2 flex-wrap">
+              {tag}
+            </span>
+          ))}
+        </div>
 
-          <div className="col-sm-12 my-2 d-flex justify-content-center">
-            <button
-              className="btn btn-secondary mx-2"
-              onClick={() => changeTagsArray([])}
-            >
-              Reset
-            </button>
-            <button
-              className="btn btn-secondary mx-2"
-              onClick={storeTagsViaButton}
-            >
-              Add
-            </button>
-            <button className="btn btn-info" onClick={testApi}>
-              {loading ? (
-                <div className="spinner-border spinner-border-sm" role="status">
-                  <span className="sr-only">Loading...</span>
-                </div>
-              ) : (
-                "Show results"
-              )}
-            </button>
-          </div>
-          <div className="col-sm-12 flex-column">
-            {responseFromLambda.map((link) => (
-              <div key={link}>{link}</div>
-            ))}
-          </div>
+        <div className="col-sm-12 my-2 d-flex justify-content-center">
+          <button
+            className="btn btn-secondary mx-2"
+            onClick={() => changeTagsArray([])}
+          >
+            Reset
+          </button>
+          <button
+            className="btn btn-secondary mx-2"
+            onClick={storeTagsViaButton}
+          >
+            Add
+          </button>
+          <button className="btn btn-info" onClick={testApi}>
+            {loading ? (
+              <div className="spinner-border spinner-border-sm" role="status">
+                <span className="sr-only">Loading...</span>
+              </div>
+            ) : (
+              "Show results"
+            )}
+          </button>
+        </div>
+        <div className="col-sm-12 flex-column">
+          {responseFromLambda.map((link) => (
+            <div key={link}>{link}</div>
+          ))}
         </div>
       </div>
-    </>
+    </Layout>
   );
 };
